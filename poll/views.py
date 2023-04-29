@@ -31,28 +31,28 @@ def create(request, pk):
 
         # Create ballot as string vector
         timestamp = datetime.datetime.now().timestamp()
-        ballot = "{}|{}".format(vote, timestamp)
-        h = int.from_bytes(sha512(ballot.encode()).digest(), byteorder='big')
-        signature = pow(h, priv_key['d'], priv_key['n'])
+        strBeforeSign = "{}|{}".format(vote, timestamp)
+        h = int.from_bytes(sha512(strBeforeSign.encode()).digest(), byteorder='big')
+        signr = pow(h, priv_key['d'], priv_key['n'])
 
-        hfromSignature = pow(signature, pub_key['e'], pub_key['n'])
+        hfromSignature = pow(signr, pub_key['e'], pub_key['n'])
 
         if(hfromSignature == h):
-            status = 'Vote done successfully'
+            stat = 'Vote done successfully'
             SmartContractToWithdraw(pk, voter, timestamp)
             SmartContractForResult()
-            error = False
+            errorBool = False
         else:
-            status = 'Authentication Error'
-            error = True
+            stat = 'Authentication Error'
+            errorBool = True
         context = {
-            'ballot': ballot,
-            'signature': signature,
-            'status': status,
-            'error': error,
+            'ballot': strBeforeSign,
+            'signature': signr,
+            'status': stat,
+            'error': errorBool,
         }
-        print(error)
-        if not error:
+        print(errorBool)
+        if not errorBool:
             return render(request, 'poll/status.html', context)
 
     return render(request, 'poll/failure.html', context)
