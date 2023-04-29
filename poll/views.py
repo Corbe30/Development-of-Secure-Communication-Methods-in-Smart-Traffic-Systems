@@ -175,7 +175,10 @@ def result(request):
                 Votes have been tampered in following blocks --> {}. The authority \
                     will resolve the issue".format(voteVerification), 'error':True})
 
-        context = {"verdict":models.Event.objects.order_by('-count')[0]}
+        if (models.Vote.objects.count() >= vehicleCap):
+            context = {"verdict":models.Event.objects.order_by('-count')[0]}
+        else:
+            context = {"verdict":"too few votes"}
         return render(request, 'poll/results.html', context)
 
 
@@ -274,7 +277,7 @@ def SmartContractForResult():
         for vote in list_of_votes:
             event = models.Event.objects.filter(eventID=vote.vote)[0]
             voter = models.Car.objects.filter(public_key_n=vote.voter_public_key_n)[0]
-            if(voter.reputation > 0.2):
+            if(voter.reputation > 0.2 and random.uniform(0, 1) <= 0.6):
                 event.count += 1*voter.reputation
                 event.save()
             
@@ -301,7 +304,6 @@ def SmartContractToAward(voter, isCreator):
     new_vote.location = "28.629926810308053, 77.372044875702"
     new_vote.timestamp = datetime.datetime.now().timestamp()
 
-    
     if(not isCreator):
         new_vote.transaction = (48.0/100) * voter.reputation
         voter.reputation = max(0.0, (148.0/100) * voter.reputation)
@@ -311,7 +313,6 @@ def SmartContractToAward(voter, isCreator):
     
     voter.save()
     new_vote.save()
-    
     generateBlock()
 
 
