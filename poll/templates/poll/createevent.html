@@ -1,0 +1,25 @@
+{% extends './base.html' %}
+
+{% block content %}
+<body>
+    <div class="row text-center p-3">
+        <div class="col-md-4">
+            <div class="card p-3 mt-5 mx-auto">
+               <form method="post" action="{% url 'createevent' %}"  class="form-signin p-3">
+                {% csrf_token %}
+                <label for="eventName" class="my-4">EventName:</label><br>
+                <input type="text" name="eventName" class="form-control my-3" placeholder="event name" style="text-align: center;" required>
+
+                <label for="privateKey_n" class="my-4">Private key n:</label><br>
+                <input type="text" name="privateKey_n" class="form-control my-3" placeholder="Private key n" style="text-align: center;" required>
+
+                <label for="privateKey_d" class="my-4">Private key d:</label><br>
+                <input type="text" name="privateKey_d" class="form-control my-3" placeholder="Private key d" style="text-align: center;" required>
+
+                <button type="submit" class="btn btn-primary my-5" style="font-size: 1.4vw;">Submit</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

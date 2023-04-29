@@ -1,0 +1,29 @@
+{% extends './base.html' %}
+
+{% block content %}
+<body>
+    <div class="row text-center p-3">
+        {% if events %}
+        {% for event in events %}
+        <div class="col-md-4">
+            <div class="card p-3 mt-5 mx-auto"
+            style="border-radius: 25px; width: 30vw; height: 70vh; box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+        font-size: 1.4vw;">
+                <h2>Name: {{ event.eventName }}</h2>
+                <h4>Occurance: {{ event.occurance }}</h4>
+
+                <form action="{% url 'create' pk=event.eventID %}" method="POST" class="form-group">
+                    {% csrf_token %}
+                    <input type="text" name="privateKey_n" class="form-control my-3" placeholder="Private_Key 'n'" style="text-align: center;" required>
+                    <input type="text" name="privateKey_d" class="form-control my-3" placeholder="Private_Key 'd'" style="text-align: center;" required>
+                    <input type="submit" value="Vote" class="btn btn-primary my-4">
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No events yet</p>
+        {% endif %}
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'poll/base.html' %}
+
+{% block content %}
+    <div class="jumbotron text-left">
+        <h5 class="display-4">Blockchain Voting Flow Details</h5>
+        <p class="lead my-4">
+            1. A new vehicle which joins the network will take a copy of the ledger and blockchain.
+            <br>2. The vehicle will vote and share the ledger and blockchain with everyone. Everyone verifies the last block with last transaction when they receive the block. The verification conditions are:
+            <br>    &emsp;1. Adder incurs a loss of 10%
+            <br>    &emsp;2. Adder isn’t voting twice
+            <br>    &emsp;3. Check for tampering
+            <br>    
+            <br>    &emsp;[ in case of multiple blockchains, choose block with greater deduction of reputation in last block ]
+            <br>    
+            <br>3. At each vote, two smart contracts are executed in the same order:
+            <br>    &emsp;1. One for checking if it is the [VehicleCap]th vote. If so:
+            <br>        &emsp;&emsp;1. Calculates the verdict from votes by referring the ledger [by using stake+probability+vote]
+            <br>        &emsp;&emsp;2. add x blocks in the network - where x is the number of winners. Award 48% of current amount to the winners. Award 55% to the creator of the event.
+            <br>    &emsp;2. Other for incurring voting cost of 10% of reputation
+        </p><br>
+
+        <h5 class="display-4">Consensus</h5>
+        <p class="lead my-4">
+        We are using Proof-of-reputation consensus. In this, nodes must first establish their reputation by proving their identity. In our project, a vehicle proves their identity by validating itself with the RTA and RSU. Reputation score is calculated based on a node’s historical behavior in the network. Each voter puts 10% of their reputation at stake, so everyone can put a block in the blockchain. Other nodes validate the latest block:
+        <br>1. Isn’t double voting
+        <br>2. has put atleast 10% of its reputation at stake
+        </p><br>
+
+
+        <h5 class="display-4">Smart contracts</h5>
+        <p class="lead my-4">
+            &emsp;1. One for checking if it is the [VehicleCap]th vote. If so:
+            <br>        &emsp;&emsp;1. Calculates the verdict from votes by referring the ledger [by using stake+probability+vote]
+            <br>        &emsp;&emsp;2. add x blocks in the network - where x is the number of winners. Award 48% of current amount to the winners. Award 55% to the creator of the event.
+            <br>    &emsp;2. Other for incurring voting cost of 10% of reputation        </p><br>
+        <h5 class="display-4">Data in a Transaction</h5>
+        <p class="lead my-4">
+        - Event name
+        <br>- Location and time
+        <br>- Creator’s public key
+        <br>- Voter’s public key [ = creator in case of first vote ]
+        <br>- Voter’s final reputation after vote / result
+        </p><br>
+    
+    </div>
+{% endblock %}

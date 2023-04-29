@@ -1,0 +1,17 @@
+
+{% extends '../poll/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col mx-auto">
+        <div class="card mx-auto text-center my-5"
+        style="border-radius: 25px; width: 30vw; height: 60vh; box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+        font-size: 1.4vw;">
+            <form action="" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Create" />
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
