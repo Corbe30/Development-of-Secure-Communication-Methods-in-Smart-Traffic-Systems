@@ -354,11 +354,12 @@ def shareBlockchainLedger():
 
 def receiveBlockchainLedger():
     [blockchain, ledger, event] = receiveMessage(1000)
-    blockchain.objects.all().delete()
-    models.Block.objects.all().delete()
-    models.Event.objects.all().delete()
-    models.Vote.objects.all().delete()
+    if(blockchain.objects.count() > models.Block.objects.count()):
+        blockchain.objects.all().delete()
+        models.Block.objects.all().delete()
+        models.Event.objects.all().delete()
+        models.Vote.objects.all().delete()
 
-    blockchain.save()
-    ledger.save()
-    event.save()
+        blockchain.save()
+        ledger.save()
+        event.save()
